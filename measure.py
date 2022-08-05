@@ -44,7 +44,7 @@ else:
     if(sw1 == 0x90 and sw2 == 0x00):
         print('success: Applet selected, card response is ok')
         # Parse response
-        memPer = (data[2] | (data[2] << 8)) | (data[0] | (data[1] << 8)) << 16
+        memPer = (data[2] | (data[3] << 8)) | (data[0] | (data[1] << 8)) << 16
         memTRes = data[4] | (data[5] << 8)
         memTDes = data[6] | (data[7] << 8)
         print('Available memory:')
