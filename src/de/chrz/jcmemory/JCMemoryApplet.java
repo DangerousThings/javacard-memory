@@ -38,6 +38,7 @@ public class JCMemoryApplet extends Applet
             le = apdu.setOutgoing();
             len = 0;
 
+			JCSystem.requestObjectDeletion();
             short[] memPer = new short[2];
 			JCSystem.getAvailableMemory(memPer, (short)0, JCSystem.MEMORY_TYPE_PERSISTENT);
             short memTRes = JCSystem.getAvailableMemory(JCSystem.MEMORY_TYPE_TRANSIENT_RESET);
