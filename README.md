@@ -6,7 +6,7 @@ Javacard applet to measure memory usage. Uses `JCSystem.getAvailableMemory`.
 
 Install `ant` and the Javacard SDKs.
 
-Build using `JC_HOME=SDKPATH/jc304_kit ant dist` (Other SDKs work as well probably)
+Build using `JC_HOME=SDKPATH/jc304_kit ant dist`
 
 ## Usage
 
