@@ -4,8 +4,8 @@
     <get src="https://github.com/martinpaljak/ant-javacard/releases/download/v20.03.25/ant-javacard.jar" skipexisting="true" dest="."/>
     <taskdef name="javacard" classname="pro.javacard.ant.JavaCard" classpath="ant-javacard.jar"/>
     <javacard>
-      <cap output="target/javacard-memory.cap" sources="src" classes="target" aid="12:34:56:78:9A:BC" version="1.0">
-        <applet class="de.chrz.jcmemory.JCMemoryApplet" aid="12:34:56:78:9A:BC:01"/>
+      <cap output="target/javacard-memory.cap" sources="src" classes="target" aid="A0000008466D656D6F7279" version="1.0">
+        <applet class="de.chrz.jcmemory.JCMemoryApplet" aid="A0000008466D656D6F727901"/>
       </cap>
     </javacard>
   </target>
