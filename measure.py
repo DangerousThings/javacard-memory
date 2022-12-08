@@ -38,17 +38,19 @@ else:
     connection = red.createConnection()
     connection.connect()
     # Select the applet
-    print('info: Sending applet selection') 
+    print('info: Sending applet selection')
     data, sw1, sw2 = connection.transmit(
         [0x00, 0xA4, 0x04, 0x00, 0x0C, 0xA0, 0x00, 0x00, 0x08, 0x46, 0x6D, 0x65, 0x6D, 0x6F, 0x72, 0x79, 0x01])
     if(sw1 == 0x90 and sw2 == 0x00):
         print('success: Applet selected, card response is ok')
         # Parse response
-        memPer = (data[2] | (data[3] << 8)) | (data[0] | (data[1] << 8)) << 16
-        memTRes = data[4] | (data[5] << 8)
-        memTDes = data[6] | (data[7] << 8)
+        memPer = int.from_bytes(data[0:4], "big")
+        memPerTot = int.from_bytes(data[4:8], "big")
+        memPerQ = (memPer / memPerTot) * 100.0
+        memTRes = int.from_bytes(data[8:10], "big")
+        memTDes = int.from_bytes(data[10:12], "big")
         print('Available memory:')
-        print('PERSISTENT:         ' + str(memPer) + ' bytes')
+        print('PERSISTENT:         ' + str(memPer) + ' bytes of ' + str(memPerTot) + ' bytes (' + str(int(memPerQ)) + '% free)')
         print('TRANSIENT_RESET:    ' + str(memTRes) + ' bytes')
         print('TRANSIENT_DESELECT: ' + str(memTDes) + ' bytes')
     else:
