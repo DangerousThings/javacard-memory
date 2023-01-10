@@ -70,6 +70,8 @@ public class JCMemoryApplet extends Applet
 
             return;
         }
+
+        ISOException.throwIt(ISO7816.SW_INS_NOT_SUPPORTED);
     }
 
 }
