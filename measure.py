@@ -44,15 +44,26 @@ else:
     if(sw1 == 0x90 and sw2 == 0x00):
         print('success: Applet selected, card response is ok')
         # Parse response
-        memPer = int.from_bytes(data[0:4], "big")
-        memPerTot = int.from_bytes(data[4:8], "big")
+        memPer = int.from_bytes(data[0:4], 'big')
+        memPerTot = int.from_bytes(data[4:8], 'big')
         memPerQ = (memPer / memPerTot) * 100.0
-        memTRes = int.from_bytes(data[8:10], "big")
-        memTDes = int.from_bytes(data[10:12], "big")
+        memTRes = int.from_bytes(data[8:10], 'big')
+        memTDes = int.from_bytes(data[10:12], 'big')
+        memTQ = min(1.0, (((memTRes + memTDes) / 2.0) / 4096.0)) * 100.0
         print('Available memory:')
         print('PERSISTENT:         ' + str(memPer) + ' bytes of ' + str(memPerTot) + ' bytes (' + str(int(memPerQ)) + '% free)')
         print('TRANSIENT_RESET:    ' + str(memTRes) + ' bytes')
         print('TRANSIENT_DESELECT: ' + str(memTDes) + ' bytes')
+        print('TRANSIENT free: ' + str(int(memTQ)) + '%')
+
+        print('info: Sending version command')
+        data, sw1, sw2 = connection.transmit(
+            [0x80, 0xF4, 0x99, 0x99, 0x00])
+        if(sw1 == 0x90 and sw2 == 0x00):
+            print('success: Version info, card response is ok')
+            print('info: Applet ' + str(data[0]) + '.' + str(data[1]) + ', Build ' + str(data[2]) + '.' + str(data[3]) + '.' + str(data[4]))
+        else:
+            print('error: Version card response: ' + f'{sw1:02x}' + ' ' + f'{sw2:02x}')
     else:
         print('error: Card response: ' + f'{sw1:02x}' + ' ' + f'{sw2:02x}')
     connection.disconnect()
