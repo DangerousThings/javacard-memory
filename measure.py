@@ -56,6 +56,15 @@ else:
         print('TRANSIENT_DESELECT: ' + str(memTDes) + ' bytes')
         print('TRANSIENT free: ' + str(int(memTQ)) + '%')
 
+        print('info: Sending batch command')
+        data, sw1, sw2 = connection.transmit(
+            [0x00, 0x01, 0x00, 0x00, 0x00])
+        if(sw1 == 0x90 and sw2 == 0x00):
+            print('success: Batch info, card response is ok')
+            print('info: Batch ' + bytes(data).hex())
+        else:
+            print('error: Version card response: ' + f'{sw1:02x}' + ' ' + f'{sw2:02x}')
+
         print('info: Sending version command')
         data, sw1, sw2 = connection.transmit(
             [0x80, 0xF4, 0x99, 0x99, 0x00])
